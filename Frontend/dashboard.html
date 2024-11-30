@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipay Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-blue-50 to-violet-50 min-h-screen font-sans">
+  <!-- Navbar with glass effect -->
+  <nav class="backdrop-blur-md bg-white/70 text-gray-800 p-4 fixed w-full top-0 z-50 shadow-sm">
+    <div class="flex justify-between items-center max-w-7xl mx-auto">
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-wallet text-indigo-600 text-2xl"></i>
+        <h1 class="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Equipay</h1>
+      </div>
+      <ul class="flex space-x-8 items-center">
+        <li><a href="#" class="hover:text-indigo-600 transition-colors duration-200">Home</a></li>
+        <li><a href="#" class="hover:text-indigo-600 transition-colors duration-200">About Us</a></li>
+        <li class="relative">
+          <button id="profile-toggle" class="hover:text-indigo-600 transition-colors duration-200 flex items-center space-x-1">
+            Profile
+            <i class="fas fa-caret-down ml-1 text-sm"></i>
+          </button>
+          
+          <!-- Profile Dropdown -->
+          <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-indigo-100 overflow-hidden">
+            <div class="px-4 py-3 border-b border-gray-100 bg-gray-50">
+              <p class="text-sm text-gray-600">Signed in as</p>
+              <p id="dropdown-username" class="text-sm font-semibold text-indigo-600"></p>
+            </div>
+            <ul class="py-1">
+              <li>
+                <a href="#" id="view-profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-200 flex items-center">
+                  <i class="fas fa-user mr-3 text-indigo-500"></i>
+                  View Your Profile
+                </a>
+              </li>
+              <li>
+                <a href="#" id="report-issue" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-200 flex items-center">
+                  <i class="fas fa-exclamation-circle mr-3 text-red-500"></i>
+                  Report an Issue
+                </a>
+              </li>
+              <li>
+                <a href="#" id="logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-200 flex items-center">
+                  <i class="fas fa-sign-out-alt mr-3 text-gray-500"></i>
+                  Log Out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Dashboard Content -->
+  <div class="max-w-7xl mx-auto mt-24 p-6">
+    <!-- Welcome Section -->
+    <div class="text-4xl font-bold text-gray-800 mb-8 flex items-center space-x-2">
+      <span>Welcome, </span>
+      <span id="username" class="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent"></span>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="mb-12">
+      <div class="grid grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl shadow-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-indigo-50">
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-lg font-semibold text-gray-700">Your Borrowings</div>
+            <i class="fas fa-arrow-down text-red-500"></i>
+          </div>
+          <div id="borrowings" class="text-3xl font-bold text-red-600">- $500</div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-indigo-50">
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-lg font-semibold text-gray-700">Your Receivables</div>
+            <i class="fas fa-arrow-up text-green-500"></i>
+          </div>
+          <div id="receivables" class="text-3xl font-bold text-green-600">+ $350</div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-indigo-50">
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-lg font-semibold text-gray-700">Total Balance</div>
+            <i class="fas fa-balance-scale text-indigo-500"></i>
+          </div>
+          <div id="total" class="text-3xl font-bold">- $150</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-between mb-8">
+      <button class="flex items-center space-x-2 bg-gradient-to-r from-emerald-400 to-emerald-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+        <i class="fas fa-user-plus"></i>
+        <span>Add Friend</span>
+      </button>
+      <button class="flex items-center space-x-2 bg-gradient-to-r from-indigo-400 to-indigo-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+        <i class="fas fa-users"></i>
+        <span>Create Group</span>
+      </button>
+      <button class="flex items-center space-x-2 bg-gradient-to-r from-violet-400 to-violet-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Add Transaction</span>
+      </button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="mb-8 relative">
+      <i class="fas fa-search absolute left-4 top-4 text-gray-400"></i>
+      <input
+        type="text"
+        class="w-full p-4 pl-12 rounded-xl shadow-lg border border-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-shadow duration-200"
+        placeholder="Search with Username or Name"
+      />
+    </div>
+
+    <!-- User Boxes (reduced size) -->
+    <div class="space-y-4" id="user-list">
+      <!-- User list will be dynamically populated here -->
+    </div>
+  </div>
+
+  <!-- Profile Modal (hidden by default) -->
+  <div id="profile-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[100] items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-2xl w-96 p-8 relative">
+      <button id="close-profile-modal" class="absolute top-4 right-4 text-gray-500 hover:text-indigo-600">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+      <div class="text-center">
+        <div class="w-24 h-24 bg-indigo-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+          <i class="fas fa-user text-indigo-600 text-4xl"></i>
+        </div>
+        <h2 id="modal-full-name" class="text-2xl font-bold text-gray-800 mb-2"></h2>
+        <p id="modal-username" class="text-gray-600 mb-4"></p>
+        <div class="space-y-3">
+          <div class="bg-indigo-50 p-3 rounded-xl">
+            <p class="text-sm text-gray-600">Total Balance</p>
+            <p id="modal-balance" class="text-xl font-bold"></p>
+          </div>
+          <button class="w-full bg-gradient-to-r from-indigo-400 to-indigo-600 text-white py-3 rounded-xl hover:shadow-lg transition-all">
+            Edit Profile
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simulating API Response
+    const apiResponse = {
+      name: "Shubh Gupta",
+      username: "shubhg",
+      borrowings: -500,
+      receivables: 350,
+      totalBalance: -150,
+      users: [
+        { name: "John Doe", username: "john", balance: -150, color: "red" },
+        { name: "Jane Smith", username: "jane", balance: 200, color: "green" },
+        { name: "Chris Brown", username: "chris", balance: -50, color: "red" },
+        { name: "Emily Davis", username: "emily", balance: 75, color: "green" }
+      ]
+    };
+
+    // Function to update the page dynamically
+    function updateDashboard(data) {
+      // Update Username
+      const typed = new Typed("#username", {
+        strings: [data.name, data.username],
+        typeSpeed: 100,
+        backSpeed: 50,
+        loop: true,
+      });
+
+      // Update Borrowings
+      const borrowingsElement = document.getElementById("borrowings");
+      borrowingsElement.innerText = `$${data.borrowings}`;
+      borrowingsElement.classList.toggle("text-red-600", data.borrowings < 0);
+      borrowingsElement.classList.toggle("text-green-600", data.borrowings > 0);
+
+      // Update Receivables
+      const receivablesElement = document.getElementById("receivables");
+      receivablesElement.innerText = `$${data.receivables}`;
+      receivablesElement.classList.toggle("text-red-600", data.receivables < 0);
+      receivablesElement.classList.toggle("text-green-600", data.receivables > 0);
+
+      // Update Total Balance
+      const totalElement = document.getElementById("total");
+      totalElement.innerText = `$${data.totalBalance}`;
+      totalElement.classList.toggle("text-red-600", data.totalBalance < 0);
+      totalElement.classList.toggle("text-green-600", data.totalBalance > 0);
+
+      // Update User List
+      const userListElement = document.getElementById("user-list");
+      userListElement.innerHTML = "";
+      data.users.forEach(user => {
+        const userElement = document.createElement("div");
+        userElement.className = `bg-white rounded-xl shadow-md p-5 flex justify-between items-center hover:shadow-lg transition-shadow duration-200 border-l-4 border-${user.color}-500`;
+        userElement.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-${user.color}-100 rounded-full flex items-center justify-center">
+              <i class="fas fa-user text-${user.color}-600"></i>
+            </div>
+            <div class="text-lg font-semibold text-gray-800">${user.name}</div>
+          </div>
+          <div class="text-${user.color}-600 font-bold">${user.balance > 0 ? '+' : ''}$${user.balance}</div>
+        `;
+        userListElement.appendChild(userElement);
+      });
+    }
+
+    // Profile Dropdown and Modal Functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileToggle = document.getElementById('profile-toggle');
+      const profileDropdown = document.getElementById('profile-dropdown');
+      const dropdownUsername = document.getElementById('dropdown-username');
+
+      // Set dropdown username
+      dropdownUsername.textContent = apiResponse.username;
+
+      // Toggle dropdown
+      profileToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        profileDropdown.classList.toggle('hidden');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        profileDropdown.classList.add('hidden');
+      });
+
+      // Prevent dropdown from closing when clicking inside
+      profileDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Profile Modal
+      const profileModal = document.getElementById('profile-modal');
+      const closeProfileModal = document.getElementById('close-profile-modal');
+
+      // View Profile
+      document.getElementById('view-profile').addEventListener('click', (e) => {
+        e.preventDefault();
+        profileDropdown.classList.add('hidden');
+        profileModal.classList.remove('hidden');
+        profileModal.classList.add('flex');
+
+        // Update modal content
+        document.getElementById('modal-full-name').textContent = apiResponse.name;
+        document.getElementById('modal-username').textContent = `@${apiResponse.username}`;
+        document.getElementById('modal-balance').textContent = `$${apiResponse.totalBalance}`;
+        document.getElementById('modal-balance').classList.toggle('text-red-600', apiResponse.totalBalance < 0);
+        document.getElementById('modal-balance').classList.toggle('text-green-600', apiResponse.totalBalance > 0);
+      });
+
+      // Close Profile Modal
+      closeProfileModal.addEventListener('click', () => {
+        profileModal.classList.add('hidden');
+        profileModal.classList.remove('flex');
+      });
+
+      // Report Issue
+      document.getElementById('report-issue').addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Report Issue functionality to be implemented');
+      });
+
+      // Logout
+      document.getElementById('logout').addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Logout functionality to be implemented');
+      });
+    });
+
+    // Update the dashboard on page load
+    updateDashboard(apiResponse);
+  </script>
+</body>
+</html>

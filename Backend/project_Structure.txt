@@ -1,0 +1,23 @@
+# app/
+#   ├── api/
+#   │   ├── __init__.py
+#   │   └── user_api.py
+#   ├── models/
+#   │   ├── __init__.py
+#   │   └── user_model.py
+#   ├── services/
+#   │   ├── __init__.py
+#   │   └── user_service.py
+#   ├── schemas/
+#   │   ├── __init__.py
+#   │   └── user_schema.py
+#   └── repositories/
+#   |   ├── __init__.py
+#   |   └── user_repository.py
+#   |-----core
+#   |     |---config
+#   |     |---tools
+#   |     |---utils
+#   |
+#   |------db
+#          |----clickhouse_client.py

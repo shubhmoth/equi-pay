@@ -1,0 +1,56 @@
+1. users Table
+Purpose:
+Stores user information, including personal details, account status, and friendships.
+
+Columns:
+
+id (Int32): Unique identifier for each user. Primary Key.
+name (String): User's full name. Mandatory.
+username (String): Unique username for login. Primary Key, Unique, Mandatory.
+email (String): Unique email address. Primary Key, Unique, Mandatory.
+mobile_number (String): User's mobile number. Mandatory.
+hashed_password (String): Securely stored hashed password. Mandatory.
+is_active (UInt8): Indicates whether the user account is active (1) or inactive (0). Default: 1.
+created_date (DateTime): Timestamp of user creation. Default: CURRENT_TIMESTAMP.
+last_updated_date (DateTime): Timestamp of the last user update. Default: CURRENT_TIMESTAMP.
+friends (Array(Int32)): Array storing id values of the user’s friends. Default: empty array.
+2. transaction Table
+Purpose:
+Logs individual transactions between users.
+
+Columns:
+
+id (Int32): Unique identifier for each transaction. Primary Key.
+payer_id (Int32): ID of the user making the payment. Mandatory.
+payee_id (Int32): ID of the user receiving the payment. Mandatory.
+transaction_amount (Float64): The amount involved in the transaction. Mandatory.
+description (String): Description or purpose of the transaction. Mandatory.
+is_settled (UInt8): Indicates if the transaction is settled (1) or not (0). Default: 0.
+is_group_transaction (UInt8): Indicates if the transaction is part of a group (1) or individual (0). Default: 0.
+created_date (DateTime): Timestamp of transaction creation. Default: CURRENT_TIMESTAMP.
+last_updated_date (DateTime): Timestamp of the last update to the transaction. Default: CURRENT_TIMESTAMP.
+3. groups Table
+Purpose:
+Manages groups and their members.
+
+Columns:
+
+id (Int32): Unique identifier for each group. Primary Key.
+admin_id (Int32): User ID of the group administrator. Mandatory.
+group_name (String): Name of the group. Mandatory.
+members (Array(Int32)): Array storing id values of group members. Mandatory.
+is_active (UInt8): Indicates if the group is active (1) or inactive (0). Default: 1.
+created_date (DateTime): Timestamp of group creation. Default: CURRENT_TIMESTAMP.
+last_modified_date (DateTime): Timestamp of the last group update. Default: CURRENT_TIMESTAMP.
+4. transaction_summary Table
+Purpose:
+Tracks financial summaries for each user.
+
+Columns:
+
+id (Int32): Unique identifier for the summary. Primary Key.
+user_id (Int32): User ID to whom the summary belongs. Primary Key.
+total_borrowings (Float64): Total amount borrowed by the user. Mandatory.
+total_receivables (Float64): Total amount owed to the user. Mandatory.
+total_amount (Float64): Net balance (total_receivables - total_borrowings). Mandatory.
+is_active (UInt8): Indicates if the summary is active (1) or inactive (0). Default: 1.
