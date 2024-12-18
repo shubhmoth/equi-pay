@@ -1,0 +1,56 @@
+image: gitpod/workspace-full:latest
+
+ports:
+  - port: 8000           # FastAPI backend
+    onOpen: open-preview
+  - port: 8080           # Frontend
+    onOpen: open-browser
+
+tasks:
+  - name: Setup ClickHouse
+    init: |
+      mkdir -p Clickhouse
+      cd Clickhouse
+      curl https://clickhouse.com/ | sh
+      ./clickhouse server &
+  - name: Setup ClickHouse Database and Table
+    command: |
+      cd Clickhouse
+      ./clickhouse client --query "CREATE DATABASE test;"
+      ./clickhouse client --query "
+      CREATE TABLE test.users
+      (
+          id UInt32,
+          email String,
+          mobile_number String,
+          username String,
+          name String,
+          password_hash String,
+          is_active UInt8,
+          created_at DateTime
+      )
+      ENGINE = MergeTree
+      PRIMARY KEY (id, email, username)
+      ORDER BY (id, email, username);"
+  - name: Backend Setup and Start Server
+    command: |
+      cd Backend
+      echo "CLICKHOUSE_HOST='localhost'" > .env
+      echo "CLICKHOUSE_PORT=9000" >> .env
+      echo "CLICKHOUSE_DATABASE='test'" >> .env
+      echo "CLICKHOUSE_USER='default'" >> .env
+      echo "CLICKHOUSE_PASSWORD=''" >> .env
+      python3 -m venv venv
+      source venv/bin/activate
+      pip install -r requirements.txt
+      uvicorn main:app --reload &
+  - name: Frontend Server Setup
+    command: |
+      cd Frontend
+      python -m http.server 8080 &
+
+vscode:
+  extensions:
+    - ms-python.python
+    - ms-azuretools.vscode-docker
+    - github.vscode-pull-request-github
