@@ -4,7 +4,7 @@ ports:
   - port: 8000           # FastAPI backend
     onOpen: open-preview
   - port: 8080           # Frontend
-    onOpen:
+    onOpen: open-preview
 
 tasks:
   - name: Install ClickHouse
@@ -16,10 +16,10 @@ tasks:
   - name: Setup ClickHouse Database
     command: |
       cd Clickhouse
-      # Wait for ClickHouse server to be ready
+      cd Clickhouse
       echo "Waiting for ClickHouse server to be ready..."
       until ./clickhouse client --query "SELECT 1"; do
-        sleep 1
+          sleep 1
       done
       echo "ClickHouse is ready!"
       ./clickhouse client --query "CREATE DATABASE test;"
