@@ -19,7 +19,7 @@ tasks:
       cd Clickhouse
       echo "Waiting for ClickHouse server to be ready..."
       until ./clickhouse client --query "SELECT 1"; do
-          sleep 1
+          sleep 10
       done
       echo "ClickHouse is ready!"
       ./clickhouse client --query "CREATE DATABASE test;"
