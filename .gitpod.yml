@@ -17,9 +17,9 @@ tasks:
     command: |
       cd Clickhouse
       # Wait for ClickHouse server to be ready
-      echo "Waiting for ClickHouse to be ready..."
-      until nc -z localhost 9000; do
-          sleep 1
+      echo "Waiting for ClickHouse server to be ready..."
+      until ./clickhouse client --query "SELECT 1"; do
+        sleep 1
       done
       echo "ClickHouse is ready!"
       ./clickhouse client --query "CREATE DATABASE test;"
