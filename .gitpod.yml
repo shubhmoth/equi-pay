@@ -7,15 +7,21 @@ ports:
     onOpen: open-browser
 
 tasks:
-  - name: Setup ClickHouse
+  - name: Install ClickHouse
     init: |
       mkdir -p Clickhouse
       cd Clickhouse
       curl https://clickhouse.com/ | sh
       ./clickhouse server &
-  - name: Setup ClickHouse Database and Table
+  - name: Setup ClickHouse Database
     command: |
       cd Clickhouse
+      # Wait for ClickHouse server to be ready
+      echo "Waiting for ClickHouse to be ready..."
+      until nc -z localhost 9000; do
+          sleep 1
+      done
+      echo "ClickHouse is ready!"
       ./clickhouse client --query "CREATE DATABASE test;"
       ./clickhouse client --query "
       CREATE TABLE test.users
@@ -32,8 +38,10 @@ tasks:
       ENGINE = MergeTree
       PRIMARY KEY (id, email, username)
       ORDER BY (id, email, username);"
-  - name: Backend Setup and Start Server
+
+  - name: Backend Setup
     command: |
+      mkdir -p Backend
       cd Backend
       echo "CLICKHOUSE_HOST='localhost'" > .env
       echo "CLICKHOUSE_PORT=9000" >> .env
@@ -44,6 +52,7 @@ tasks:
       source venv/bin/activate
       pip install -r requirements.txt
       uvicorn main:app --reload &
+
   - name: Frontend Server Setup
     command: |
       cd Frontend
