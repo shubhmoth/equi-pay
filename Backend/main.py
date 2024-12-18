@@ -1,5 +1,6 @@
 # main.py
 from app.core.tools.import_manager import *
+from fastapi.responses import HTMLResponse
 
 settings = safe_execute(get_settings, "Error loading settings")
 
@@ -24,16 +25,51 @@ safe_execute(
     "Error including API router"
 )
 
-@app.get("/")
-async def root():
-    try:
-        return {
-            "message": f"Welcome to {settings.PROJECT_NAME}",
-            "version": settings.VERSION,
-            "docs_url": "/docs"
-        }
-    except Exception as e:
-        raise RuntimeError(f"Error in root endpoint: {e}")
+@app.get("/", response_class=HTMLResponse)
+def read_root():
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Equipay</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f9;
+                color: #333;
+                text-align: center;
+                padding: 50px;
+            }
+            h1 {
+                color: #5a67d8;
+            }
+            p {
+                font-size: 18px;
+                margin-top: 20px;
+            }
+            a {
+                text-decoration: none;
+                color: #5a67d8;
+                font-weight: bold;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to FastAPI</h1>
+        <p>Your FastAPI application Equipay is running successfully!</p>
+        <p>Visit the <a href="/docs">API Documentation</a> to explore your endpoints.</p>
+    </body>
+    </html>
+    """
+    return html_content
+
+@app.get("/ping")
+def ping():
+    return {"message": "Pong!"}
+
     
 @app.get("/health")
 async def health_check(client: Client = Depends(get_clickhouse_client)):
