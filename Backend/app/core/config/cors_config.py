@@ -8,19 +8,7 @@ class CORSConfig:
         environment = os.getenv("ENVIRONMENT", "development")
         if not isinstance(environment, str) or not environment.strip():
             raise ValueError("Environment variable 'ENVIRONMENT' must be a non-empty string.")
-        if environment == "development":
-            return [
-                "http://localhost:3000",
-                "http://localhost:8000",
-                "http://127.0.0.1:3000",
-                "http://127.0.0.1:8000",
-                "http://127.0.0.1:5500"
-            ]
-        return [
-            "http://127.0.0.1:5500",
-            "https://yourfrontend.com",
-            "https://app.yourcompany.com"
-        ]
+        return ["*"]
 
     @property
     def get_cors_methods(self) -> List[str]:
